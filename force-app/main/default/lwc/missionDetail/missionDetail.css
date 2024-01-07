@@ -1,0 +1,9 @@
+:host {
+    /*--slds-c-button-brand-color-background: yellow;*/
+}
+.color-red {
+    color: red;
+}
+.slds-form-element__addon {
+    margin-left: 0;
+}

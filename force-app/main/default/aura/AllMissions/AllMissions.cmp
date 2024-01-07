@@ -1,0 +1,52 @@
+<aura:component controller="AllMissionsController" implements="forceCommunity:availableForAllPageTypes" description="AllMissions" access="global">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:attribute name="listViewResult" type="string[]"/>
+    <c:auraPubSub aura:id="pubsub" onready="{!c.handleReload}" />
+
+    <aura:attribute name="title" type="String" default="All Missions"/>
+
+    <lightning:messageChannel type="missionCommunication__c" aura:id="missionCommunication"/>
+
+    <lightning:card>
+        <aura:set attribute="title">
+            {!v.title}
+            <lightning:avatar src="{!$Resource.logo}" size="small" class="slds-m-right_x-small"/>
+        </aura:set>
+        <div class="slds">
+            <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+                <thead>
+                <tr class="slds-text-heading_label">
+                    <th scope="col"><div class="slds-truncate" title="Rank">Rank</div></th>
+                    <th scope="col"><div class="slds-truncate" title="Name">Subject</div></th>
+                    <th scope="col"><div class="slds-truncate" title="Guild">Guild</div></th>
+                    <th scope="col"><div class="slds-truncate" title="Status">Status</div></th>
+                </tr>
+                </thead>
+                <tbody>
+                <aura:iteration items="{!v.listViewResult}" var="p">
+                    <tr onclick="{!c.handleClick}" style="width:100%;" data-index="{!p.Id}">
+                        <td>
+                            <div class="slds-truncate" title="{!p.Complexity_Rank__c}">
+                                <lightning:button variant="brand" class="rank" label="{!p.Complexity_Rank__c}" disabled="true"/>
+                            </div>
+                        </td>
+                        <td><div class="slds-truncate" title="{!p.Subject__c}">{!p.Subject__c}</div></td>
+                        <td><div class="slds-truncate" title="{!p.Guild__r.Name}">{!p.Guild__r.Name}</div></td>
+                        <td>
+                            <div class="slds-truncate" title="{!p.Status__c}">
+                                <aura:if isTrue="{!p.Status__c == 'Completed'}">
+                                    <lightning:button variant="brand" class="completed" label="{!p.Status__c}" disabled="true"/>
+                                <aura:set attribute="else">
+                                    <lightning:button variant="brand" class="available" label="{!p.Status__c}" disabled="true"/>
+                                </aura:set>
+                                </aura:if>
+                            </div>
+                        </td>
+                    </tr>
+                </aura:iteration>
+                </tbody>
+            </table>
+        </div>
+
+    </lightning:card>
+</aura:component>

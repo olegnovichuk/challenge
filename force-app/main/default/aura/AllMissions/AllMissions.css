@@ -1,0 +1,13 @@
+.THIS .rank {
+    background: black;
+    border-radius: 6px;
+    border-color: black;
+}
+.THIS .completed {
+    border-radius: 20px;
+}
+.THIS .available {
+    background: green;
+    border-radius: 20px;
+    border-color: green;
+}

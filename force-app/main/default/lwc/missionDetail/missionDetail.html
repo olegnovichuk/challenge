@@ -1,0 +1,73 @@
+<template>
+    <div class="slds-m-around_medium">
+        <template if:true={showData}>
+            <div class="slds-form-element">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_medium">
+                    <div class="slds-col slds-form-element__control">
+                        <h2 class="slds-text-heading_large">
+                            <lightning-formatted-text value="Mission Details"></lightning-formatted-text>
+                            <lightning-icon icon-name="utility:connected_apps"
+                                            variant="warning"
+                                            size="medium">
+                            </lightning-icon>
+                        </h2>
+                    </div>
+                    <div class="slds-col slds-form-element__control slds-text-align_right">
+                        <lightning-icon icon-name="utility:http"
+                                        size="xx-small">
+                        </lightning-icon>
+                        <lightning-formatted-text value={mission.Guild__r.Name}></lightning-formatted-text>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element slds-m-bottom_medium">
+                <label class="slds-form-element__label">Subject</label>
+                <div class="slds-form-element__control slds-input-has-fixed-addon">
+                    <lightning-formatted-text value={mission.Subject__c}></lightning-formatted-text>
+                </div>
+            </div>
+            <div class="slds-form-element slds-m-bottom_medium">
+                <label class="slds-form-element__label">Details</label>
+                <div class="slds-form-element__control slds-input-has-fixed-addon">
+                    <lightning-formatted-rich-text value={mission.Details__c}></lightning-formatted-rich-text>
+                </div>
+            </div>
+            <div class="slds-form-element slds-m-bottom_medium">
+                <label class="slds-form-element__label">Rank</label>
+                <div class="slds-form-element__control slds-input-has-fixed-addon">
+                    <lightning-formatted-text value={mission.Complexity_Rank__c}></lightning-formatted-text>
+                </div>
+            </div>
+            <div class="slds-border_bottom slds-m-bottom_medium"></div>
+            <div class="slds-form-element slds-m-bottom_medium">
+                <label class="slds-form-element__label">Input Label</label>
+                <div class="slds-form-element__control slds-input-has-fixed-addon">
+                    <span class="slds-form-element__addon">$</span>
+                    <input type="text" readonly class="slds-input" value={mission.Reward__c} />
+                </div>
+            </div>
+            <div class="slds-form-element slds-m-bottom_medium" if:true={mission.Deadline__c}>
+                <label class="slds-form-element__label">Dead line</label>
+                <div class="slds-form-element__control color-red">
+                    <lightning-formatted-date-time year="numeric" month="numeric" day="numeric"
+                                                   value={mission.Deadline__c}>
+                    </lightning-formatted-date-time>
+                </div>
+            </div>
+            <div class="slds-form-element slds-align_absolute-center">
+                <template lwc:if={isAssigned}>
+                    <lightning-button class="complete-button" label="Complete" onclick={handleComplete} disabled={isDisabledButton} variant="brand-outline" ></lightning-button>
+                </template>
+                <template lwc:else>
+                    <lightning-button class="accept-button" label="Accept" onclick={handleAccept} disabled={isDisabledButton} variant="brand"></lightning-button>
+                </template>
+            </div>
+        </template>
+
+        <template if:false={showData}>
+            <div class="slds-align_absolute-center">
+                {emptyLabel}
+            </div>
+        </template>
+    </div>
+</template>
